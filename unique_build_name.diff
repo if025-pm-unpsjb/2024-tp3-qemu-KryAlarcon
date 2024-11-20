@@ -1,0 +1,29 @@
+diff --git a/Makefile b/Makefile
+index 3aff94e..d57a2fc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -7,7 +7,11 @@
+ #
+ # Name for the binary, hex and other output build files.
+ # 
+-APP_NAME=$(APP)
++ifeq ($(UNIQUE_BUILD_NAME), y)
++	APP_NAME=build
++else
++	APP_NAME=$(APP)
++endif
+ DEBUG=1
+ 
+ ############################################################################### 
+diff --git a/Makefile.config b/Makefile.config
+index 5629848..2453b68 100644
+--- a/Makefile.config
++++ b/Makefile.config
+@@ -12,3 +12,6 @@
+ # App to build
+ # relative to the src/ folder, leave void if the project is in this folder
+ APP = example_app
++
++# -------- Other options / Advanced options ----------------------------
++UNIQUE_BUILD_NAME = y
+\ No newline at end of file
