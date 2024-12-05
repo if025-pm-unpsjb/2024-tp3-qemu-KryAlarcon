@@ -118,7 +118,7 @@ int main( void )
     prvSetupHardware();
 
     /*Definicion del semaforo*/
-     xSemaphore = xSemaphoreCreateBinary();
+     xSemaphore = xSemaphoreCreateMutex();
      xSemaphoreGive( xSemaphore );
 
     /* Map the OLED access functions to the driver functions that are appropriate
@@ -141,10 +141,10 @@ int main( void )
     prvPrintString("Start!\n\r");
 
     /* Creates the periodic tasks. */
-    xTaskCreate( prvTaskT1, "T1", configMINIMAL_STACK_SIZE + 50, (void*) &task1, configMAX_PRIORITIES - 1, NULL );
-    xTaskCreate( prvTask, "T2", configMINIMAL_STACK_SIZE + 50, (void*) &task2, configMAX_PRIORITIES - 2, NULL );
-    xTaskCreate( prvTask, "T3", configMINIMAL_STACK_SIZE + 50, (void*) &task3, configMAX_PRIORITIES - 3, NULL );
-    xTaskCreate( prvTaskT4, "T4", configMINIMAL_STACK_SIZE + 50, (void*) &task3, configMAX_PRIORITIES - 4, NULL );
+    xTaskCreate( prvTask, "T1", configMINIMAL_STACK_SIZE + 50, (void*) &task1, configMAX_PRIORITIES - 1, NULL );
+    xTaskCreate( prvTaskT2, "T2", configMINIMAL_STACK_SIZE + 50, (void*) &task2, configMAX_PRIORITIES - 2, NULL );
+    xTaskCreate( prvTaskT3, "T3", configMINIMAL_STACK_SIZE + 50, (void*) &task3, configMAX_PRIORITIES - 3, NULL );
+    xTaskCreate( prvTask, "T4", configMINIMAL_STACK_SIZE + 50, (void*) &task3, configMAX_PRIORITIES - 4, NULL );
 
     vTraceEnable( TRC_START );
 
@@ -223,7 +223,7 @@ void prvTask( void *pvParameters )
 	vTaskDelete( NULL );
 }
 /*-----------------------------------------------------------*/
-void prvTaskT1( void *pvParameters )
+void prvTaskT2( void *pvParameters )
 {
 	char cMessage[ mainMAX_MSG_LEN ];
 	unsigned int uxReleaseCount = 0;
@@ -252,7 +252,7 @@ void prvTaskT1( void *pvParameters )
 	vTaskDelete( NULL );
 }
 /*-----------------------------------------------------------*/
-void prvTaskT4( void *pvParameters )
+void prvTaskT3( void *pvParameters )
 {
 	char cMessage[ mainMAX_MSG_LEN ];
 	unsigned int uxReleaseCount = 0;
